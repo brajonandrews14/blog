@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+
+<div class="p-5 text-center bg-image rounded-3">
+   <img src="{{article.hero.url}}" class="img-fluid" style="height: 400px;"/>
+</div>
+
+<!-- <div class="header">
+    <img src="{{article.hero.url}}" class="img-fluid"/>
+</div> -->
+
+
+<div class="row">
+    <div class="column middle">
+        <p>{{ article.content}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="column middle">
+        <h3>Comment Form</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{comment_form}}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="column middle">
+        <h3>Comments</h3>
+        {% for comment in comments %}
+        <div class="comment-session">
+            <div class="post-comment">
+                <div class="list">
+                    <div class="name col">
+                        <p>{{comment.full_name}}</p>
+                    </div>
+                    <div class="comment-post">
+                        <p>{{comment.comment}}</p>
+                    </div>
+                    <div class="user">
+                        <div class="name col">
+                            <button>Up Vote</button>
+                            <button>Down Vote</button>
+                            <button>Reply</button>
+                            <!-- <p>1</p> -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p>There are no approved comments for this article</p>
+
+        {% endfor %}
+
+    </div>    
+</div>
+
+<div class="footer text-center">
+    Footer
+</div>
+
+
+{% endblock %}

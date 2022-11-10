@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="overflow-hidden">
+    <div class="text-center">
+        <img src="https://media.istockphoto.com/id/1331943301/photo/blog-light-bulb-sign.jpg?b=1&s=170667a&w=0&k=20&c=MFRhBXsnOE7tYSjYx2CLRJgGDzUD5Kxh9c0tH-wP7dk=" alt="Trulli" class="img-fluid border rounded-3 shadow-lg mb-4"  height="300px" loading="lazy">
+    </div>
+</div>
+
+{% for article in articles %}
+<div class="row">
+    <div class="col">
+        <h3>
+            {{ article.title|upper }}
+        </h3>
+        <p>{{ article.content|truncatewords:"50" }}</p>
+        <p><b>Created {{article.created_at | timesince}} ago</b></p>
+    </div>
+    <div class="col-2 align-self-center ">
+        <a class="align-text-bottom" href="article/{{article.id}}"><span>Read Article</span></a>
+    </div>
+</div>
+
+{% endfor %}
+<div class="footer text-center">
+    Footer
+</div>
+{% endblock %}
