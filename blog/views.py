@@ -1,6 +1,7 @@
 from django.shortcuts import HttpResponseRedirect, render
 from .models import Article, Comment
 from .forms import CommentForm
+from django.urls import reverse
 
 def home(request):
     articles = Article.objects.filter(status=2).order_by('-created_at')
@@ -19,7 +20,7 @@ def article_detail(request, pk):
             comment = form.save(commit=False)
             comment.article = Article.objects.get(id=pk)
             comment.save()
-            return HttpResponseRedirect('/')
+            return reverse('article-detail', args=[pk])
 
     else:
         comment_form = CommentForm()
