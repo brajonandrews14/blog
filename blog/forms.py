@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, HiddenInput
 from django.forms import ModelForm, TextInput, EmailInput, Textarea
 
 from .models import Comment
@@ -7,7 +7,7 @@ from .models import Comment
 class CommentForm(ModelForm):        
     class Meta: 
         model = Comment
-        fields = ['first_name', 'last_name', 'comment',]
+        fields = ['first_name', 'last_name', 'comment','article']
         labels = {
             'first_name': '','last_name': '', 'comment': ''
         }
@@ -23,6 +23,8 @@ class CommentForm(ModelForm):
             'style': 'max-width: 300px;',
             'placeholder': 'Last Name'
             }),
+
+        'article': HiddenInput(),
 
         'comment': Textarea(attrs={
             'class': "form-control",
