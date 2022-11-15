@@ -8,9 +8,12 @@ docker-compose run web python3.9 manage.py createsuperuser
 # Make Migrations
 docker-compose run web python3.9 manage.py makemigrations
 
-# Make Migrations
+# Migrate
 docker-compose run web python3.9 manage.py migrate
 
 
-#Run Test
+# Run Test
 docker-compose run web python3.9 manage.py test blog
+
+Username: admin
+Password password
