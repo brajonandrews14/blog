@@ -3,7 +3,7 @@ from django.db import models
 class Article(models.Model): 
     title = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
-    hero = models.ImageField(null=True, blank=True)
+    hero = models.ImageField()
     content = models.TextField()
     viewCount=models.IntegerField(default=0)
     class Status(models.TextChoices):
@@ -19,6 +19,9 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return "/article/%i" % (self.id)
+
     def incrementViewCount(self):
         self.viewCount += 1
         self.save()
@@ -30,7 +33,7 @@ class Comment(models.Model):
     last_name = models.CharField(max_length=30)
     comment = models.TextField()
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    approved = models.BooleanField(default=False)
+    approved = models.BooleanField(default=True)
 
     def full_name(self):
         return self.first_name + " " + self.last_name

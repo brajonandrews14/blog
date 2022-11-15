@@ -7,22 +7,49 @@
     </div>
 </div>
 
-{% for article in articles %}
-<div class="row">
-    <div class="col">
-        <h3>
-            {{ article.title|upper }}
-        </h3>
-        <p>{{ article.content|truncatewords:"50" }}</p>
-        <p><b>Created {{article.created_at | timesince}} ago</b></p>
-    </div>
-    <div class="col-2 align-self-center ">
-        <a class="align-text-bottom" href="article/{{article.id}}"><span>Read Article</span></a>
-    </div>
-</div>
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th class="no-sort">Article</th>
+            <th>Post Date</th>
+            <th class="no-sort">Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>
+                <h3>
+                    {{ article.title }}
+                </h3>
+                <p>{{ article.content|truncatewords:"50" }}</p>
+            </td>
+            <td>{{article.created_at}}</td>
+            <td>    
+                <a class="align-text-bottom" href="article/{{article.id}}"><span>Read Article</span></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-{% endfor %}
+
 <div class="footer text-center">
     Footer
 </div>
+
+<script>
+$(document).ready( function () {
+    $('#table_id').DataTable({
+        searching: false, 
+        paging: false, 
+        info: false,
+        order: [[ 1, 'asc' ]],
+        ordering: true,
+            columnDefs: [{
+            orderable: false,
+            targets: "no-sort"}]
+    });
+} );
+</script>
 {% endblock %}

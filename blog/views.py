@@ -10,25 +10,21 @@ def home(request):
 
 def article_detail(request, pk):
 
-    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = CommentForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            comment = form.save(commit=False)
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
             comment.article = Article.objects.get(id=pk)
             comment.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect( comment.article.get_absolute_url() )
 
     else:
-        comment_form = CommentForm()
+        comment_form = CommentForm(initial={"article": Article.objects.get(id=pk)})
 
     comments = Comment.objects.filter(article=Article.objects.get(id=pk), approved=True)
 
     article = Article.objects.get(id=pk)
     article.incrementViewCount()
-    comment_form = CommentForm
-    context = {'article': article, 'comment_form': comment_form, 'comments':comments}
+    context = {"article": article, "comment_form": comment_form, "comments":comments}
 
     return render(request, "article_detail.html", context)
